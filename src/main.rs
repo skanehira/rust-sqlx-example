@@ -24,7 +24,7 @@ impl<E> UserManagementRepository<E> {
 
 impl<E> Repository for UserManagementRepository<E>
 where
-    E: for<'c> Executor<'c, Database = MySql> + Clone + Send + Sync,
+    E: for<'c> Executor<'c, Database = MySql> + Send + Sync,
 {
     async fn create(&self, input: CreateUserInput) -> Result<()> {
         let query = sqlx::query!(
