@@ -1,0 +1,21 @@
+services:
+  mysql:
+    container_name: rust-sqxl-example-db
+    ports:
+      - "3306:3306"
+    image: mysql:8.3
+    environment:
+      MYSQL_ROOT_PASSWORD: sandbox
+      MYSQL_DATABASE: sandbox
+      MYSQL_USER: sandbox
+      MYSQL_PASSWORD: sandbox
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - if [ $$(pgrep -c -u mysql -f docker-entrypoint.sh) -gt 0 ]; then exit 1; fi
+      interval: 3s
+      timeout: 3s
+      retries: 250
+      start_period: 30s
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
